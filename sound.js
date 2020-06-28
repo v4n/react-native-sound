@@ -162,6 +162,13 @@ Sound.prototype.getSystemVolume = function(callback) {
   return this;
 };
 
+Sound.prototype.getAveragePower = function(callback) {
+  // if (this._loaded) {
+  // RNSound.getCurentTime(this._key, callback);
+  // }
+  RNSound.getAveragePower(this._key, callback);
+};
+
 Sound.prototype.setSystemVolume = function(value) {
   if (IsAndroid) {
     RNSound.setSystemVolume(value);

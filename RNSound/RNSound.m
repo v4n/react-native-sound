@@ -303,15 +303,20 @@ RCT_EXPORT_METHOD(getAveragePower
                   : (nonnull NSNumber *)key withCallback
                   : (RCTResponseSenderBlock)callback) {
     AVAudioPlayer *player = [self playerForKey:key];
-
     if (player) {
+
         [player setMeteringEnabled: YES];
-        
+
        // - (float)averagePowerForChannel:(NSUInteger)channelNumber; /* returns average power in decibels for a given channel */
         [player updateMeters];
-        callback([NSArray
-                  arrayWithObjects:[NSArray arrayWithObjects:[NSNumber numberWithDouble:[player peakPowerForChannel:0]], [NSNumber numberWithDouble:[player peakPowerForChannel:1]], nil],
-                             [NSNumber numberWithBool:player.isPlaying], nil]);
+        callback([NSArray arrayWithObjects:
+                    [NSArray arrayWithObjects:
+                    [NSNumber numberWithDouble:[player peakPowerForChannel:0 ]],
+                    [NSNumber numberWithDouble:[player peakPowerForChannel:1 ]],
+                    nil],
+                    [NSNumber numberWithBool:player.isPlaying],
+                    nil
+                  ]);
     } else {
         callback([NSArray arrayWithObjects:[NSNumber numberWithInteger:-1],
                                            [NSNumber numberWithBool:NO], nil]);
